@@ -1,6 +1,15 @@
 import functools
 
-from flask import Blueprint, flash, g, render_template, request, session, url_for
+from flask import (
+    Blueprint,
+    flash,
+    g,
+    render_template,
+    redirect,
+    request,
+    session,
+    url_for,
+)
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from flaskr.db import get_db
@@ -27,7 +36,7 @@ def register():
             error = "User {} is already registered.".format(username)
 
         if error is None:
-            db.executescript(
+            db.execute(
                 "INSERT INTO user (username, password) VALUES (?, ?)",
                 (username, generate_password_hash(password)),
             )
