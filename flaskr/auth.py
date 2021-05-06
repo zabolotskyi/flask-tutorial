@@ -4,8 +4,8 @@ from flask import (
     Blueprint,
     flash,
     g,
-    render_template,
     redirect,
+    render_template,
     request,
     session,
     url_for,
@@ -74,7 +74,7 @@ def login():
     return render_template("auth/login.html")
 
 
-@bp.route("/logput")
+@bp.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("index"))
@@ -88,7 +88,7 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
+        g.user = db.execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
 
 
 def login_required(view):
