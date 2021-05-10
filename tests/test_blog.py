@@ -65,17 +65,11 @@ def test_update(client, auth, app):
         assert post["title"] == "updated"
 
 
-# @pytest.mark.parametrize(
-#     "path",
-#     (
-#         "/create",
-#         "/1/update",
-#     ),
-# )
-# def test_create_update_validate(client, auth, path):
-#     auth.login()
-#     response = client.post(path, data={"title": "", "body": ""})
-#     assert b"Title is required." in response.data
+@pytest.mark.parametrize("path", ("/create", "/1/update"))
+def test_create_update_validate(client, auth, path):
+    auth.login()
+    response = client.post(path, data={"title": "", "body": ""})
+    assert b"Title is required." in response.data
 
 
 def test_delete(client, auth, app):
